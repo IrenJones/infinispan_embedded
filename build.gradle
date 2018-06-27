@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.epam.infinispan.embedded'
+version = '0.0.1-SNAPSHOT'
+
+description = """Test"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+
+    maven { url "https://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:'1.5.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.5.4.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-cache', version:'1.5.4.RELEASE'
+    compile group: 'org.infinispan', name: 'infinispan-jcache', version:'8.2.6.Final'
+    compile(group: 'org.infinispan', name: 'infinispan-spring4-embedded', version:'8.2.6.Final') {
+        exclude(module: 'commons-logging')
+        exclude(module: 'log4j-core')
+        exclude(module: 'log4j-slf4j-impl')
+        exclude(module: 'log4j-jcl')
+    }
+    compileOnly 'org.projectlombok:lombok:1.18.0'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version:'1.5.4.RELEASE'
+    runtime group: 'mysql', name: 'mysql-connector-java', version:'5.1.42'
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.5.4.RELEASE') {
+        exclude(module: 'commons-logging')
+    }
+}
